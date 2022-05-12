@@ -12,6 +12,8 @@ function Header(props) {
                     <Nav className="me-auto">
                         <Link to="/home" className="nav-link">Home</Link>
                         <Link to="/about" className="nav-link">About</Link>
+                        <Link to="/register" className="nav-link">Register</Link>
+                        <Link to="/maydata" className="nav-link">My data</Link>
                     </Nav>
                 </Container>
             </Navbar>
