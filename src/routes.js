@@ -6,8 +6,6 @@ import About from './pages/About'
 import RegisterCustomer from './pages/RegisterCustomer'
 import NotFound from './pages/NotFound'
 
-import MayData from './pages/MayData'
-
 export const Routes = () => {
     return (
         <Switch>
@@ -15,7 +13,8 @@ export const Routes = () => {
             <Route path="/home" component={Home} />
             <Route path="/about" component={About} />
             <Route path="/register" component={RegisterCustomer} />
-            <Route path="/maydata" component={MayData} />
+            <Route path="/listcustomer" component={NotFound} />
+            <Route path="/editcustomer/:id" component={NotFound} />
             <Route component={NotFound} />
         </Switch>
     )
