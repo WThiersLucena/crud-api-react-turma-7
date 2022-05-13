@@ -1,4 +1,5 @@
 import React from 'react'
+import Cliente from '../../components/Cliente/Cliente'
 import Header from '../../components/template/Header'
 
 function ListCustomer(props) {
@@ -8,7 +9,8 @@ function ListCustomer(props) {
         
         <>
         <Header/>
-        <h2>sssssssssssss</h2>
+        
+        <Cliente />
         </>
     )
 }
