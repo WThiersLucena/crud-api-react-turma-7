@@ -23,12 +23,22 @@ function Cliente (props) {
    
    
     // METODO PARA EDITAR CLIENTE
-    const edidtCliente = (cliente) => {
-        if (cliente.description === '') {
+    const editCliente = (cliente) => {
+        if (cliente.name === '' || cliente.age === '' || cliente.document ===''||
+            cliente.tel === '') {
             return
         }
 
         axios.put(`${URL}/${cliente.id}`, cliente)
+        .then((response) => {
+            getClientes()
+        })
+    }
+
+
+    // METODO DE DELETAR
+    const deleteCliente = (id) => {
+        axios.delete(`${URL}/${id}`)
         .then((response) => {
             getClientes()
         })
@@ -39,7 +49,8 @@ function Cliente (props) {
     return(
         <>
         <ClienteList clientes ={clientes} 
-            edidtCliente={edidtCliente}/>
+            editCliente={editCliente}
+            deleteCliente={deleteCliente}/>
         </>
     )
 }

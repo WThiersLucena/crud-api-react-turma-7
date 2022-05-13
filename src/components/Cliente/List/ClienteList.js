@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-
+import { AiFillCheckCircle } from "react-icons/ai";
 import {
     Container, ListGroup, Row,
-    Col, Table, ButtonGroup, Button
+    Col, Button, Modal,
+    Alert, Form, Table
 } from 'react-bootstrap'
 
 function ClienteList(props) {
@@ -10,6 +11,14 @@ function ClienteList(props) {
     const clientes = props.clientes || []
     const [cliente, setCliente] = useState({});
 
+    const [show, setShow] = useState(false);
+    const [showEdit, setShowEdit] = useState(false);
+    const [successDelete, setSuccessDelete] = useState(false);
+
+    const handleCloseEdit = () => setShowEdit(false);
+    const handleShowEdit = () => setShowEdit(true);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
 
     const renderCliente = () => {
@@ -38,11 +47,23 @@ function ClienteList(props) {
                                         <td>{item.document}</td>
                                         <td>{item.tel}</td>
                                         <td >
-                                            
-                                            <Button variant="primary">Alterar</Button>{' '}
+
+                                            <Button className="mx-3" variant="secondary"
+                                                onClick={() => {
+                                                    setCliente(cliente)
+                                                    handleShowEdit()
+                                                }}>
+                                                Editar
+                                            </Button>
 
 
-                                            <Button variant="secondary">Deletar</Button>{' '}
+                                            <Button className="mx-3" variant="danger"
+                                                onClick={() => {
+                                                    setCliente(cliente)
+                                                    handleShow()
+                                                }}>
+                                                Deletar
+                                            </Button>
                                         </td>
                                     </tr>
 
@@ -60,6 +81,15 @@ function ClienteList(props) {
     return (
         <Container>
 
+            {
+                successDelete
+                    ?
+                    <Alert key='success' variant='success'>
+                        <AiFillCheckCircle size="30" /> Item apagado com suceso
+                    </Alert>
+                    :
+                    ''
+            }
             <Row>
                 <Col>
                     <ListGroup variant="flush">
@@ -67,6 +97,80 @@ function ClienteList(props) {
                     </ListGroup>
                 </Col>
             </Row>
+
+
+            {/* //modal edit */}
+            <Modal show={showEdit} onHide={handleCloseEdit}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Editar Tarefa</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form.Group className="mb-3" controlId="description">
+                        <Form.Label>Nome : </Form.Label>
+                        <Form.Control type="text" placeholder="Digite o novo nome da tarefa"
+                            value={cliente.name}
+                            onChange={event => setCliente({ ...cliente, name: event.target.value })}
+                        />
+
+                        <Form.Label>Idade :</Form.Label>
+
+                        <Form.Control type="text" placeholder="Digite o novo nome da tarefa"
+                            value={cliente.age}
+                            onChange={event => setCliente({ ...cliente, age: event.target.value })}
+                        />
+                        <Form.Label>CPF :</Form.Label>
+
+                        <Form.Control type="text" placeholder="Digite o novo nome da tarefa"
+                            value={cliente.document}
+                            onChange={event => setCliente({ ...cliente, document: event.target.value })}
+                        />
+                        <Form.Label>Telefone :</Form.Label>
+                        <Form.Control type="text" placeholder="Digite o novo nome da tarefa"
+                            value={cliente.tel}
+                            onChange={event => setCliente({ ...cliente, tel: event.target.value })}
+                        />
+                    </Form.Group>
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseEdit}>
+                        Close
+                    </Button>
+                    <Button variant="success" onClick={() => {
+                        props.editCliente(cliente)
+                        handleCloseEdit()
+                    }
+
+                    }>
+                        Editar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* //modal delete */}
+            <Modal show={show} onHide={handleClose}>
+
+                <Modal.Header closeButton>
+                    <Modal.Title>Apagar Tarefa</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Deseja apagar : <strong>{cliente.name}</strong></Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="danger" onClick={() => {
+                        props.deleteCliente(cliente.id)
+                        handleClose()
+                        setSuccessDelete(true)
+                        setTimeout(
+                            () => {
+                                setSuccessDelete(false)
+                            }, 1000)
+                    }}>
+                        Apagar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
         </Container>
     )
