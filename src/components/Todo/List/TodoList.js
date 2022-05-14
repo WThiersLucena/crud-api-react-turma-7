@@ -112,6 +112,7 @@ function TodoList(props) {
                 <Modal.Header closeButton>
                     <Modal.Title>Editar Tarefa</Modal.Title>
                 </Modal.Header>
+
                 <Modal.Body>
                     <Form.Group className="mb-3" controlId="description">
                         <Form.Label>Descrição da Tarefa</Form.Label>
@@ -119,6 +120,7 @@ function TodoList(props) {
                             value={task.description}
                             onChange={event => setTask({...task, description: event.target.value})} />
                     </Form.Group>
+                    
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseEdit}>

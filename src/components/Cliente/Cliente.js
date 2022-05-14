@@ -5,17 +5,19 @@ import { baseUrl } from '../../environments'
 
 
 
-function Cliente (props) {
+function Cliente(props) {
 
-    const URL = `${baseUrl}/customer`
+    const URL = `${baseUrl}/customer` //Personalizando a URL aqui
     const [clientes, setClientes] = useState([])
 
     useEffect(() => {
         getClientes()
     }, [])
 
+    // METODO PARA TRAZER CLIENTE
     const getClientes = () => {
-        axios.get(`${URL}`).then((response) => {
+        axios.get(`${URL}`)
+        .then((response) => {
             setClientes(response.data)
         })
     }
@@ -38,8 +40,7 @@ function Cliente (props) {
 
     // METODO DE DELETAR
     const deleteCliente = (id) => {
-        axios.delete(`${URL}/${id}`)
-        .then((response) => {
+         axios.delete(`${URL}/${id}`).then((response) => {
             getClientes()
         })
     }
@@ -48,9 +49,10 @@ function Cliente (props) {
 
     return(
         <>
-        <ClienteList clientes ={clientes} 
-            editCliente={editCliente}
-            deleteCliente={deleteCliente}/>
+        <ClienteList
+             clientes ={clientes} 
+             editar={editCliente}
+             deletar={deleteCliente}/>
         </>
     )
 }
